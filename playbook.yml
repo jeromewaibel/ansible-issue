@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+
+    - set_fact:
+        json_from_template: "{{ lookup('template', 'json.j2') | string }}"
+      vars:
+        var: var_value
+
+    - debug:
+        var: json_from_template|string
+    - debug:
+        var: json_from_template|type_debug
+
+    - name: create output
+      ansible.builtin.template:
+        src: another.j2
+        dest: output.txt
